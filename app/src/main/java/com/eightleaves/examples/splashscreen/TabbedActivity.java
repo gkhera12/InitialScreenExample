@@ -1,6 +1,7 @@
 package com.eightleaves.examples.splashscreen;
 
 import android.annotation.TargetApi;
+import android.graphics.drawable.AnimationDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.support.design.widget.FloatingActionButton;
@@ -16,6 +17,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -67,7 +69,11 @@ public class TabbedActivity extends AppCompatActivity {
             }
         });
 
+
+
     }
+
+
 
 
     @Override
@@ -101,6 +107,7 @@ public class TabbedActivity extends AppCompatActivity {
          * fragment.
          */
         private static final String ARG_SECTION_NUMBER = "section_number";
+        private AnimationDrawable rocketAnimation;
 
         public PlaceholderFragment() {
         }
@@ -121,8 +128,18 @@ public class TabbedActivity extends AppCompatActivity {
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
                                  Bundle savedInstanceState) {
             View rootView = inflater.inflate(R.layout.fragment_tabbed, container, false);
-            ImageView imageView = (ImageView) rootView.findViewById(R.id.imageView);
-            imageView.setColorFilter(getImageColor(getArguments().getInt(ARG_SECTION_NUMBER)));
+            ImageView rocketImage= (ImageView) rootView.findViewById(R.id.imageView);
+            rocketImage.setBackgroundResource(R.drawable.rocket_thrust);
+            rocketAnimation = (AnimationDrawable) rocketImage.getBackground();
+            rootView.setOnTouchListener(new View.OnTouchListener() {
+                @Override
+                public boolean onTouch(View view, MotionEvent motionEvent) {
+                    if (motionEvent.getAction() == MotionEvent.ACTION_DOWN) {
+                        rocketAnimation.start();
+                    }
+                    return true;
+                }
+            });
             TextView textView = (TextView) rootView.findViewById(R.id.section_label);
             textView.setText(getString(R.string.section_format, getArguments().getInt(ARG_SECTION_NUMBER)));
             return rootView;
