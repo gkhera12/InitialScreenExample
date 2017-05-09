@@ -4,6 +4,7 @@ import android.annotation.TargetApi;
 import android.graphics.drawable.AnimationDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
+import android.support.annotation.RequiresApi;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
@@ -58,18 +59,6 @@ public class TabbedActivity extends AppCompatActivity {
         // Set up the ViewPager with the sections adapter.
         mViewPager = (ViewPager) findViewById(R.id.container);
         mViewPager.setAdapter(mSectionsPagerAdapter);
-
-
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
-
-
 
     }
 
@@ -129,28 +118,18 @@ public class TabbedActivity extends AppCompatActivity {
                                  Bundle savedInstanceState) {
             View rootView = inflater.inflate(R.layout.fragment_tabbed, container, false);
             ImageView rocketImage= (ImageView) rootView.findViewById(R.id.imageView);
-            rocketImage.setBackgroundResource(R.drawable.rocket_thrust);
-            rocketAnimation = (AnimationDrawable) rocketImage.getBackground();
-            rootView.setOnTouchListener(new View.OnTouchListener() {
-                @Override
-                public boolean onTouch(View view, MotionEvent motionEvent) {
-                    if (motionEvent.getAction() == MotionEvent.ACTION_DOWN) {
-                        rocketAnimation.start();
-                    }
-                    return true;
-                }
-            });
+            rocketImage.setImageDrawable(getImageDrawableFromScreen(getArguments().getInt(ARG_SECTION_NUMBER)));
             TextView textView = (TextView) rootView.findViewById(R.id.section_label);
             textView.setText(getString(R.string.section_format, getArguments().getInt(ARG_SECTION_NUMBER)));
             return rootView;
         }
 
-        @TargetApi(Build.VERSION_CODES.M)
-        private int getImageColor(int anInt) {
-            HashMap<Integer, Integer> imageColor = new HashMap<>();
-            imageColor.put(1,getContext().getColor(R.color.blue));
-            imageColor.put(2,getContext().getColor(R.color.green));
-            imageColor.put(3,getContext().getColor(R.color.red));
+        @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
+        private Drawable getImageDrawableFromScreen(int anInt) {
+            HashMap<Integer, Drawable> imageColor = new HashMap<>();
+            imageColor.put(1,getContext().getDrawable(R.drawable.rocket_thrust));
+            imageColor.put(2,getContext().getDrawable(R.drawable.rocket_thrust1));
+            imageColor.put(3,getContext().getDrawable(R.drawable.rocket_thrust2));
             return imageColor.get(anInt);
         }
     }
