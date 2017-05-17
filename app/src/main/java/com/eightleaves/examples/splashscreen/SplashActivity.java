@@ -25,8 +25,6 @@ public class SplashActivity extends AppCompatActivity {
     public void onWindowFocusChanged(boolean hasFocus) {
         rocketAnimation.start();
         checkIfAnimationDone();
-
-       rocketAnimation.start();
     }
 
     private void checkIfAnimationDone() {
@@ -39,6 +37,7 @@ public class SplashActivity extends AppCompatActivity {
                 } else{
                     Intent intent = new Intent(getApplicationContext(), TabbedActivity.class);
                     startActivity(intent);
+                    finish();
                 }
             }
         },TIME_FOR_ANIMATION);
