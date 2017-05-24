@@ -1,7 +1,10 @@
 package com.eightleaves.examples.splashscreen;
 
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.AnimationDrawable;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -42,4 +45,6 @@ public class SplashActivity extends AppCompatActivity {
             }
         },TIME_FOR_ANIMATION);
     }
+
+
 }
